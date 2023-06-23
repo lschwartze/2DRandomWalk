@@ -12,6 +12,10 @@ let data = { //initial point at (0,0) with marker of size 10 that is blue
 
 //runs if start button is clicked
 function startWalking(){
+    timeOutId = setInterval(iterator, 50);
+}
+
+function iterator(){
     //defines range of axis
     let layout = {
         xaxis: {range:[Math.min.apply(Math, data.x) - 2, Math.max.apply(Math, data.x) + 2]},
@@ -59,5 +63,8 @@ function startWalking(){
     data.marker.color[data.marker.color.length-1] = 'rgb(65, 151, 232)';
     data.marker.color.push('rgb(255, 0, 0)')
 
-    setTimeout(startWalking, 50);
+    if(data.x[data.x.length-1] == 0 && data.y[data.y.length-1] == 0){
+        Plotly.newPlot(w, datapoints, layout);
+        clearInterval(timeOutId);
+    }
 }
